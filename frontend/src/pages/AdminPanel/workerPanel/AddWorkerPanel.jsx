@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Button from "../../components/Button";
+import Button from "../../../components/Button";
 import { Form, useActionData, useNavigation, useSearchParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,8 +11,8 @@ const AddWorkerPanel = () => {
     const isSubmitting = navigation.state === "submitting";
 
     useEffect(() => {
-        if (data?.error) {
-            toast.error(data.error, {
+        if (!data?.status) {
+            toast.error(data?.message, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -39,7 +39,7 @@ const AddWorkerPanel = () => {
                         name="firstName"
                         placeholder="Wpisz imię"
                         required
-                        className="mt-1 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 pl-3 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
 
@@ -53,7 +53,7 @@ const AddWorkerPanel = () => {
                         name="lastName"
                         placeholder="Wpisz nazwisko"
                         required
-                        className="mt-1 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 pl-3 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
             </div>
@@ -67,7 +67,7 @@ const AddWorkerPanel = () => {
                         id="role"
                         name="role"
                         required
-                        className="mt-1 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 pl-3 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     >
                         <option value="employee">Pracownik</option>
                         <option value="admin">Admin</option>
@@ -84,43 +84,13 @@ const AddWorkerPanel = () => {
                         name="email"
                         placeholder="Wpisz email"
                         required
-                        className="mt-1 block w-full  h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="mt-1 block w-full pl-3 h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                 </div>
             </div>
 
-            <div className="flex mt-12  md:row-auto columns-1">
-                <div className="m-3 w-1/2">
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                        Hasło
-                    </label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Wpisz hasło"
-                        required
-                        className="mt-1 block w-full  h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                </div>
-                <div className="m-3 w-1/2">
-                    <label htmlFor="repeat-password" className="block text-sm font-medium text-gray-700">
-                        Powtórz Hasło
-                    </label>
-                    <input
-                        type="password"
-                        id="repeat-password"
-                        name="repeatPassword"
-                        placeholder="Powtórz hasło"
-                        required
-                        className="mt-1 block w-full  h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                </div>
-            </div>
-
-            {/* Przyciski */}
             <div className="flex justify-end space-x-4">
-                <Button label={"Dodaj pracownika"} />
+                <Button label={"Dodaj pracownika"} disabled={isSubmitting} />
             </div>
             <ToastContainer />
         </Form>

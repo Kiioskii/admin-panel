@@ -8,3 +8,5 @@ export const logIn = (email, password) => API.post("/auth/login", { email, passw
 
 //WORKERS
 export const addWorker = (data) => API.post("/workers/add", { ...data });
+export const getAllWorkers = () => API.get("/workers/getAll");
+export const getWorkerById = ({ workerId }) => API.get(`/workers/getById?workerId=${workerId}`);

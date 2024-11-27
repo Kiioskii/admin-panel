@@ -12,7 +12,9 @@ const Button = ({ label, onClick, variant = "primary", disabled = false }) => {
 
     return (
         <button
-            className={`${baseStyles} ${variants[variant]} ${disabled ? disabledStyles : ""}`}
+            className={`${baseStyles} ${disabled ? variants["gray"] : variants[variant]} ${
+                disabled ? disabledStyles : ""
+            }`}
             onClick={onClick}
             disabled={disabled}
         >

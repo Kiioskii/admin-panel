@@ -1,9 +1,17 @@
 const supabase = require("../config/supabase");
 
 const getAllRolesDB = async (queryParams) => {
-    const { data: roles, error } = await supabase.from("roles").select("*");
+    const out = { status: 1 };
+    const rolesDB = await supabase.from("roles").select("*");
 
-    console.log("data", data);
+    if (rolesDB.error) {
+        out.status = 0;
+        out.message = rolesDB.error;
+    } else {
+        out.data = rolesDB.data;
+    }
+
+    return out;
 };
 
 module.exports = { getAllRolesDB };

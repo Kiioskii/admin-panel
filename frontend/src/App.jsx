@@ -3,15 +3,15 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import HomePage from "./pages/HomePgae";
 import AuthenticationPage, { authAction } from "./pages/AuthenticationPage";
-import AdminPanelPage, { AdminPanelLoader } from "./pages/AdminPanelPage";
-import WorkersPanel, { loaderWorkers } from "./pages/AdminPanel/WorkersPanel";
-import AddWorkerPanel from "./pages/AdminPanel/AddWorkerPanel";
+import WorkersPanel from "./pages/AdminPanel/workerPanel/WorkersPanel";
+import AddWorkerPanel from "./pages/AdminPanel/workerPanel/AddWorkerPanel";
+import EditWorkerPanel from "./pages/AdminPanel/workerPanel/EditWorkerPanel";
 import AdminLayout from "./layouts/AdminLayout";
-import UserLayout from "./layouts/UserLayout";
+import UserLayout from "./layouts/WorkersLayout";
 import Dashboard from "./pages/AdminPanel/Dashboard";
 
-//ACTIONS
-import { addWorker } from "./api/api";
+//ACTIONS & LOADERS
+import { addWorkerAction, workerLoader, workerEditLoader } from "./actions/workers";
 
 function App() {
     const router = createBrowserRouter([
@@ -26,12 +26,19 @@ function App() {
                     children: [
                         { index: true, element: <Dashboard /> },
                         {
-                            path: "users",
+                            path: "workers",
                             element: <UserLayout />,
                             // loader: loaderWorkers,
                             children: [
-                                { index: true, element: <WorkersPanel /> },
-                                { path: "add-new-user", element: <AddWorkerPanel />, action: addWorker },
+                                { index: true, element: <WorkersPanel />, loader: workerLoader },
+                                { path: "add-new-worker", element: <AddWorkerPanel />, action: addWorkerAction },
+                                {
+                                    path: ":workerId",
+                                    children: [
+                                        { path: "edit-worker", element: <EditWorkerPanel />, loader: workerEditLoader },
+                                        // { path: "delete-worker", element: <AddWorkerPanel />, action: addWorkerAction },
+                                    ],
+                                },
                             ],
                         },
                     ],

@@ -1,4 +1,4 @@
-const { addWorkerDB } = require("../services/workerService");
+const { addWorkerDB, getAllWorkersDB, getWorkerByIdDB } = require("../services/workerService");
 const { validWorkerData } = require("../middleware/workers/validWorkers");
 
 const addWorker = async (req, res, next) => {
@@ -6,23 +6,81 @@ const addWorker = async (req, res, next) => {
         const data = req.body;
 
         const queryParams = {
-            first_nae: data.firstName,
+            first_name: data.firstName,
             last_name: data.lastName,
             email: data.email,
-            role_id: data.roleId,
+            role_id: 1,
         };
 
-        const validation = validWorkerData(queryParams);
+        const validation = await validWorkerData(queryParams);
 
         if (!validation.status) {
-            throw Error(validation.message);
+            throw new Error(validation.message);
         }
 
         const result = await addWorkerDB(queryParams);
+        if (!result.status) {
+            throw new Error(result.message);
+        }
         res.status(201).json({ success: true, data: result });
     } catch (error) {
         next(error);
     }
 };
 
-module.exports = { addWorker };
+const getAllWorkers = async (req, res, next) => {
+    try {
+        const result = await getAllWorkersDB();
+        if (!result.status) {
+            throw new Error(result.message);
+        }
+        // Create proper data
+        const workersArr = result.data.map((item) => {
+            return {
+                workerId: item.id,
+                firstName: item.first_name,
+                lastName: item.last_name,
+                email: item.email,
+                roleId: item.role_id,
+                roleName: item.roles.role,
+            };
+        });
+
+        res.status(201).json({ success: true, data: workersArr });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const getWorkerById = async (req, res, next) => {
+    try {
+        console.log("req.query", req.query); // Debugowanie parametrów
+        const { workerId } = req.query;
+
+        if (!workerId) {
+            throw new Error("Nie ma takiego pracownika");
+        }
+
+        const result = await getWorkerByIdDB(workerId);
+        if (!result.status) {
+            throw new Error(result.message);
+        }
+
+        const workerDataDB = result.data[0];
+
+        // Create proper data
+        const workerData = {
+            firstName: workerDataDB.first_name,
+            lastName: workerDataDB.last_name,
+            email: workerDataDB.email,
+            roleId: workerDataDB.role_id,
+            roleName: workerDataDB.roles.role,
+        };
+
+        res.status(201).json({ success: true, data: workerData });
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = { addWorker, getAllWorkers, getWorkerById };
