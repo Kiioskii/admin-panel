@@ -3,6 +3,6 @@ const { getAllRoles } = require("../controllers/rolesController");
 
 const router = express.Router();
 
-router.post("/getAll", getAllRoles);
+router.get("/getAll", getAllRoles);
 
 module.exports = router;

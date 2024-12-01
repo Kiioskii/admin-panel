@@ -7,11 +7,14 @@ import WorkersPanel from "./pages/AdminPanel/workerPanel/WorkersPanel";
 import AddWorkerPanel from "./pages/AdminPanel/workerPanel/AddWorkerPanel";
 import EditWorkerPanel from "./pages/AdminPanel/workerPanel/EditWorkerPanel";
 import AdminLayout from "./layouts/AdminLayout";
-import UserLayout from "./layouts/WorkersLayout";
+import WorkersLayout from "./layouts/WorkersLayout";
 import Dashboard from "./pages/AdminPanel/Dashboard";
 
 //ACTIONS & LOADERS
-import { addWorkerAction, workerLoader, workerEditLoader } from "./actions/workers";
+import { addWorkerLoader, addWorkerAction, workerLoader, workerEditLoader, workerEditAction } from "./actions/workers";
+import RolesLayout from "./layouts/RolesLayout";
+import RolesPanel from "./pages/AdminPanel/rolesPanel/RolesPanel";
+import { rolesLoader } from "./actions/roles";
 
 function App() {
     const router = createBrowserRouter([
@@ -27,17 +30,37 @@ function App() {
                         { index: true, element: <Dashboard /> },
                         {
                             path: "workers",
-                            element: <UserLayout />,
-                            // loader: loaderWorkers,
+                            element: <WorkersLayout />,
                             children: [
                                 { index: true, element: <WorkersPanel />, loader: workerLoader },
-                                { path: "add-new-worker", element: <AddWorkerPanel />, action: addWorkerAction },
+                                {
+                                    path: "add-new-worker",
+                                    element: <AddWorkerPanel />,
+                                    loader: addWorkerLoader,
+                                    action: addWorkerAction,
+                                },
                                 {
                                     path: ":workerId",
                                     children: [
-                                        { path: "edit-worker", element: <EditWorkerPanel />, loader: workerEditLoader },
+                                        {
+                                            path: "edit-worker",
+                                            element: <EditWorkerPanel />,
+                                            loader: workerEditLoader,
+                                            action: workerEditAction,
+                                        },
                                         // { path: "delete-worker", element: <AddWorkerPanel />, action: addWorkerAction },
                                     ],
+                                },
+                            ],
+                        },
+                        {
+                            path: "roles",
+                            element: <RolesLayout />,
+                            children: [
+                                {
+                                    index: true,
+                                    element: <RolesPanel />,
+                                    loader: rolesLoader,
                                 },
                             ],
                         },

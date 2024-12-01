@@ -10,8 +10,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/auth", authRoutes);
-app.use("/workers", workerRoutes);
 app.use("/roles", rolesRoutes);
+app.use("/workers", workerRoutes);
 
 app.use((err, req, res, next) => {
     if (err) {

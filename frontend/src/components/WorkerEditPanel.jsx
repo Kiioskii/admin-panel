@@ -1,9 +1,30 @@
 import { Form, Link } from "react-router-dom";
 import Button from "./Button";
-const WorkerEditPanel = ({ WorkerData }) => {
-    console.log("ddddddd", WorkerData);
-
+import { useState } from "react";
+const WorkerEditPanel = ({ WorkerData, rolesData }) => {
+    console.log("WorkerData", WorkerData);
+    console.log("rolesData", rolesData);
     const isSubmitting = navigation.state === "submitting";
+
+    const [userData, setUserData] = useState(
+        WorkerData
+            ? {
+                  firstName: WorkerData?.firstName,
+                  lastName: WorkerData?.lastName,
+                  email: WorkerData?.email,
+                  role: WorkerData?.roleName,
+              }
+            : {}
+    );
+
+    // Obsługa zmiany danych w polach formularza
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUserData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
     return (
         <Form method="POST" className="sm:w-10/12 w-max mx-auto p-6 bg-white shadow-md rounded-lg space-y-4">
@@ -18,7 +39,8 @@ const WorkerEditPanel = ({ WorkerData }) => {
                         id="firstName"
                         name="firstName"
                         placeholder="Wpisz imię"
-                        defaultValue={WorkerData.firstName}
+                        value={userData.firstName}
+                        onChange={handleChange}
                         required
                         className="mt-1 pl-3 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
@@ -32,7 +54,8 @@ const WorkerEditPanel = ({ WorkerData }) => {
                         type="text"
                         id="lastName"
                         name="lastName"
-                        defaultValue={WorkerData.lastName}
+                        value={userData.lastName}
+                        onChange={handleChange}
                         placeholder="Wpisz nazwisko"
                         required
                         className="mt-1 pl-3 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -46,14 +69,19 @@ const WorkerEditPanel = ({ WorkerData }) => {
                         Stanowisko
                     </label>
                     <select
-                        id="role"
-                        name="role"
+                        id="roleId"
+                        name="roleId"
                         required
-                        defaultValue={WorkerData.roleName}
+                        value={userData.roleId}
+                        onChange={handleChange}
                         className="mt-1 pl-3 block w-full h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     >
-                        <option value="employee">Pracownik</option>
-                        <option value="Admin">Admin</option>
+                        {rolesData &&
+                            rolesData.map((item) => (
+                                <option value={item.id} key={item.id}>
+                                    {item.role}
+                                </option>
+                            ))}
                     </select>
                 </div>
 
@@ -66,7 +94,8 @@ const WorkerEditPanel = ({ WorkerData }) => {
                         id="email"
                         name="email"
                         placeholder="Wpisz email"
-                        defaultValue={WorkerData.email}
+                        value={userData.email}
+                        onChange={handleChange}
                         required
                         className="mt-1 block w-full pl-3 h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />

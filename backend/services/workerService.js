@@ -12,6 +12,22 @@ const addWorkerDB = async (queryParams) => {
     return out;
 };
 
+const editWorkerDB = async ({ queryParams, workerId }) => {
+    const out = { status: 1 };
+    // const { data, error } = await supabase.from("workers").insert([queryParams]).select();
+
+    const { data, error } = await supabase.from("workers").update(queryParams).eq("id", workerId).select();
+
+    if (error) {
+        out.status = 0;
+        out.message = error.message;
+    }
+
+    console.log("out edit xxx", out);
+
+    return out;
+};
+
 const getAllWorkersDB = async () => {
     const out = { status: 1 };
 
@@ -45,4 +61,4 @@ const getWorkerByIdDB = async (workerId) => {
     return out;
 };
 
-module.exports = { addWorkerDB, getAllWorkersDB, getWorkerByIdDB };
+module.exports = { addWorkerDB, editWorkerDB, getAllWorkersDB, getWorkerByIdDB };

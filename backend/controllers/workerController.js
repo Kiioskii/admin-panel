@@ -1,4 +1,4 @@
-const { addWorkerDB, getAllWorkersDB, getWorkerByIdDB } = require("../services/workerService");
+const { addWorkerDB, editWorkerDB, getAllWorkersDB, getWorkerByIdDB } = require("../services/workerService");
 const { validWorkerData } = require("../middleware/workers/validWorkers");
 
 const addWorker = async (req, res, next) => {
@@ -19,6 +19,33 @@ const addWorker = async (req, res, next) => {
         }
 
         const result = await addWorkerDB(queryParams);
+        if (!result.status) {
+            throw new Error(result.message);
+        }
+        res.status(201).json({ success: true, data: result });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const editWorkers = async (req, res, next) => {
+    try {
+        const { workerData, workerId } = req.body;
+
+        const queryParams = {
+            first_name: workerData.firstName,
+            last_name: workerData.lastName,
+            email: workerData.email,
+            role_id: +workerData.roleId,
+        };
+
+        const validation = await validWorkerData(queryParams);
+
+        if (!validation.status) {
+            throw new Error(validation.message);
+        }
+
+        const result = await editWorkerDB({ queryParams: queryParams, workerId: workerId });
         if (!result.status) {
             throw new Error(result.message);
         }
@@ -83,4 +110,4 @@ const getWorkerById = async (req, res, next) => {
     }
 };
 
-module.exports = { addWorker, getAllWorkers, getWorkerById };
+module.exports = { addWorker, editWorkers, getAllWorkers, getWorkerById };

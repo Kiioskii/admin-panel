@@ -16,7 +16,7 @@ const validWorkerData = async (data) => {
         console.log("roleIdArr", roleIdArr);
         console.log("data", data);
 
-        if (!roleIdArr.includes(data.role_id)) {
+        if (!roleIdArr.includes(+data.role_id)) {
             throw new Error("Nie można znaleźć takiej roli w bazie danych");
         }
     } catch (err) {
