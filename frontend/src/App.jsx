@@ -15,6 +15,14 @@ import { addWorkerLoader, addWorkerAction, workerLoader, workerEditLoader, worke
 import RolesLayout from "./layouts/RolesLayout";
 import RolesPanel from "./pages/AdminPanel/rolesPanel/RolesPanel";
 import { rolesLoader } from "./actions/roles";
+import ProductsLayout from "./layouts/ProductsLayout";
+import ProductsPanel from "./pages/AdminPanel/products/ProductsPanel";
+import MessagesLayout from "./layouts/MessagesLayout";
+import MessagesPanel from "./pages/AdminPanel/messages/messagesPanel";
+
+import ClientsLayout from "./layouts/ClientsLayout";
+import ClientsPanel from "./pages/AdminPanel/clients/ClientsPanel";
+import { clientsTabData } from "./data/clients/tabData";
 
 function App() {
     const router = createBrowserRouter([
@@ -61,6 +69,39 @@ function App() {
                                     index: true,
                                     element: <RolesPanel />,
                                     loader: rolesLoader,
+                                },
+                            ],
+                        },
+                        {
+                            path: "products",
+                            element: <ProductsLayout />,
+                            children: [
+                                {
+                                    index: true,
+                                    element: <ProductsPanel />,
+                                    // loader: rolesLoader,
+                                },
+                            ],
+                        },
+                        {
+                            path: "messages",
+                            element: <MessagesLayout />,
+                            children: [
+                                {
+                                    index: true,
+                                    element: <MessagesPanel />,
+                                    // loader: rolesLoader,
+                                },
+                            ],
+                        },
+                        {
+                            path: "clients",
+                            element: <ClientsLayout name={"Klienci"} data={clientsTabData} />,
+                            children: [
+                                {
+                                    index: true,
+                                    element: <ClientsPanel />,
+                                    // loader: rolesLoader,
                                 },
                             ],
                         },

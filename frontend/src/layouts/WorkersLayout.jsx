@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Button from "../components/Button";
+import Button from "../components/ui/Button";
 import { Link } from "react-router-dom";
 const UserLayout = () => {
     return (

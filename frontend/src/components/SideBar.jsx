@@ -14,12 +14,13 @@ const Sidebar = () => {
 
     const menuItems = [
         { id: 1, name: "Pulpit", icon: <IoHomeOutline />, badge: "5" },
-        { id: 2, name: "Messenger", icon: <AiOutlineMessage /> },
+        { id: 2, name: "Wiadomości", icon: <AiOutlineMessage />, to: "messages" },
         { id: 3, name: "Zamówienia", icon: <CiViewList />, badge: "12" },
-        { id: 4, name: "Produkty", icon: <IoShirtOutline />, badge: "20+" },
+        { id: 4, name: "Produkty", icon: <IoShirtOutline />, to: "products", badge: "20+" },
         { id: 5, name: "Stanowiska", icon: <AiOutlineTeam />, to: "roles" },
         { id: 6, name: "Raporty", icon: <FaChartBar /> },
         { id: 7, name: "Pracownicy", icon: <AiOutlineTeam />, to: "workers" },
+        { id: 8, name: "Klienci", icon: <AiOutlineTeam />, to: "clients" },
     ];
 
     const teams = [

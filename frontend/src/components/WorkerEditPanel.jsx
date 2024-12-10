@@ -1,5 +1,5 @@
 import { Form, Link } from "react-router-dom";
-import Button from "./Button";
+import Button from "./ui/Button";
 import { useState } from "react";
 const WorkerEditPanel = ({ WorkerData, rolesData }) => {
     console.log("WorkerData", WorkerData);

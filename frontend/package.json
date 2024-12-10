@@ -10,11 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nextui-org/date-picker": "^2.1.8",
+    "@nextui-org/react": "^2.4.8",
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
     "@supabase/supabase-js": "^2.46.1",
     "axios": "^1.7.7",
     "chart.js": "^4.4.6",
+    "dayjs": "^1.11.13",
+    "framer-motion": "^11.12.0",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
