@@ -24,6 +24,18 @@ import ClientsLayout from "./layouts/ClientsLayout";
 import ClientsPanel from "./pages/AdminPanel/clients/ClientsPanel";
 import { clientsTabData } from "./data/clients/tabData";
 
+const userData = {
+    id: 3,
+    firstName: "Dariusz",
+    lastName: "Quebo",
+    time: "17:32",
+    message: "Osiem kobiet, każda z nich to gwiazdka, jakbym jebał PiS",
+    image: "https://i.gremicdn.pl/image/free/66e3c9c31149995ccf535f36a1806853/?t=crop:905:561:nowe:60:0,resize:fill:948:592,enlarge:1",
+    orders: 0,
+    clientNumber: 1231,
+    new: true,
+};
+
 function App() {
     const router = createBrowserRouter([
         {
@@ -89,7 +101,7 @@ function App() {
                             children: [
                                 {
                                     index: true,
-                                    element: <MessagesPanel />,
+                                    element: <MessagesPanel userData={userData} />,
                                     // loader: rolesLoader,
                                 },
                             ],
